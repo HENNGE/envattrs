@@ -1,0 +1,8 @@
+.*
+env
+*.egg-info
+test-env
+reports
+__pycache__
+build
+dist
