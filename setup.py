@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    version='1.0.0',
+    version='1.1.0',
     name='envattrs',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),

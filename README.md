@@ -21,6 +21,8 @@ options = envattrs.load(Options, 'PREFIX')  # Sets port to PREFIX_PORT env varia
 
 ## Sub objects
 
+New in 1.1.0
+
 ```python
 
 import attr
@@ -55,3 +57,18 @@ options = envattrs.load(Options, 'PREFIX')
 * `envattrs.converters.boolean(truthy_values={'on', '1', 'true'})`
 * `envattrs.converters.sequence(delimiter=' ')`
 * `envattrs.converters.mapping(item_delimiter=' ', value_delimiter='=')`
+
+
+## Changelog
+
+### 1.1.0
+
+Released: 2018-01-10
+
+* Added support for nested objects.
+
+### 1.0.0
+
+Relased: 2017-06-28
+
+* Initial release
