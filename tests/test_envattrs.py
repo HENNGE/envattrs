@@ -41,3 +41,18 @@ def test_converters():
         'key1': 'value1',
         'key2': 'value2',
     }
+
+
+def test_nested():
+    @attr.s
+    class Sub:
+        value = attr.ib()
+
+    @attr.s
+    class Main:
+        sub = attr.ib(metadata={envattrs.SubAttrs: Sub})
+
+    instance = envattrs.load(Main, 'TEST', {
+        'TEST_SUB_VALUE': 'foo'
+    })
+    assert instance.sub.value == 'foo'

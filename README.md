@@ -19,6 +19,35 @@ class Options:
 options = envattrs.load(Options, 'PREFIX')  # Sets port to PREFIX_PORT env variable
 ```
 
+## Sub objects
+
+```python
+
+import attr
+import envattrs
+
+
+@attr.s
+class ServerOptions:
+    port = attr.ib(convert=int)
+
+
+@attr.s
+class AppOptions:
+    name = attr.ib()
+
+
+@attr.s
+class Options:
+    server = attr.ib(metadata={envattrs.SubAttrs: ServerOptions})
+    app = attr.ib(metadata={envattrs.SubAttrs: AppOptions})
+
+
+# ServerOptions.port is loaded from PREFIX_SERVER_PORT
+# AppOptions.name is loaded from PREFIX_APP_NAME
+options = envattrs.load(Options, 'PREFIX')
+```
+
 
 ## Built in converter factories
 
