@@ -4,12 +4,11 @@ from typing import TypeVar, Type
 try:
     import attr
 except ImportError:
-    try:
-        import dataclasses
-    except ImportError:
-        print("Neither dataclasses not attr libraries available")
-        print("Make sure you are using either one and install that module")
-
+    pass
+try:
+    import dataclasses
+except ImportError:
+    pass
 
 T = TypeVar("T")
 
