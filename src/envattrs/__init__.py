@@ -23,8 +23,7 @@ def _iter(cls, prefix, source):
     elif dataclasses is not None and dataclasses.is_dataclass(cls):
         fields = dataclasses.fields
     else:
-        print("Object is neither dataclass nor attr class")
-        return
+        raise TypeError("Object is neither dataclass nor attr class")
 
     for field in fields(cls):
         sub = field.metadata.get(SubAttrs, None)
