@@ -4,11 +4,11 @@ from typing import TypeVar, Type
 try:
     import attr
 except ImportError:
-    pass
+    attr = None
 try:
     import dataclasses
 except ImportError:
-    pass
+    dataclasses = None
 
 T = TypeVar("T")
 
@@ -18,9 +18,9 @@ SubAttrs = object()
 def _iter(cls, prefix, source):
     # Check if it is an attr class or dataclass
     # and use the corresponding fields function
-    if attr.has(cls):
+    if attr is not None and attr.has(cls):
         fields = attr.fields
-    elif dataclasses.is_dataclass(cls):
+    elif dataclasses is not None and dataclasses.is_dataclass(cls):
         fields = dataclasses.fields
     else:
         print("Object is neither dataclass nor attr class")
