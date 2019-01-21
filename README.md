@@ -13,7 +13,7 @@ import envattrs
 
 @attr.s
 class Options:
-    port = attr.ib(convert=int)
+    port = attr.ib(converter=int)
 
 
 options = envattrs.load(Options, 'PREFIX')  # Sets port to PREFIX_PORT env variable
@@ -31,7 +31,7 @@ import envattrs
 
 @attr.s
 class ServerOptions:
-    port = attr.ib(convert=int)
+    port = attr.ib(converter=int)
 
 
 @attr.s

@@ -26,9 +26,9 @@ def test_load_fail():
 def test_converters():
     @attr.s
     class Foo:
-        flag = attr.ib(convert=converters.boolean())
-        sequence = attr.ib(convert=converters.sequence())
-        mapping = attr.ib(convert=converters.mapping())
+        flag = attr.ib(converter=converters.boolean())
+        sequence = attr.ib(converter=converters.sequence())
+        mapping = attr.ib(converter=converters.mapping())
 
     instance = envattrs.load(
         Foo,
