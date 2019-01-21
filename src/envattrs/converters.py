@@ -1,16 +1,18 @@
-def boolean(truthy_values={'1', 'on', 'true'}):
+def boolean(truthy_values={"1", "on", "true"}):
     def converter(value):
         return value.lower() in truthy_values
+
     return converter
 
 
-def sequence(delimiter=' '):
+def sequence(delimiter=" "):
     def converter(value):
-        return value.split(' ')
+        return value.split(" ")
+
     return converter
 
 
-def mapping(item_delimiter=' ', value_delimiter='='):
+def mapping(item_delimiter=" ", value_delimiter="="):
     sequencer = sequence(item_delimiter)
 
     def converter(value):

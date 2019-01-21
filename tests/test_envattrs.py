@@ -10,8 +10,8 @@ def test_load():
     class Foo:
         bar = attr.ib()
 
-    instance = envattrs.load(Foo, 'FOO', {'FOO_BAR': 'baz'})
-    assert instance.bar == 'baz'
+    instance = envattrs.load(Foo, "FOO", {"FOO_BAR": "baz"})
+    assert instance.bar == "baz"
 
 
 def test_load_fail():
@@ -20,7 +20,7 @@ def test_load_fail():
         bar = attr.ib()
 
     with pytest.raises(TypeError):
-        envattrs.load(Foo, 'BAR', {'FOO_BAR': 'baz'})
+        envattrs.load(Foo, "BAR", {"FOO_BAR": "baz"})
 
 
 def test_converters():
@@ -30,17 +30,18 @@ def test_converters():
         sequence = attr.ib(convert=converters.sequence())
         mapping = attr.ib(convert=converters.mapping())
 
-    instance = envattrs.load(Foo, 'FOO', {
-        'FOO_FLAG': 'true',
-        'FOO_SEQUENCE': 'first second',
-        'FOO_MAPPING': 'key1=value1 key2=value2',
-    })
+    instance = envattrs.load(
+        Foo,
+        "FOO",
+        {
+            "FOO_FLAG": "true",
+            "FOO_SEQUENCE": "first second",
+            "FOO_MAPPING": "key1=value1 key2=value2",
+        },
+    )
     assert instance.flag
-    assert instance.sequence == ['first', 'second']
-    assert instance.mapping == {
-        'key1': 'value1',
-        'key2': 'value2',
-    }
+    assert instance.sequence == ["first", "second"]
+    assert instance.mapping == {"key1": "value1", "key2": "value2"}
 
 
 def test_nested():
@@ -52,7 +53,5 @@ def test_nested():
     class Main:
         sub = attr.ib(metadata={envattrs.SubAttrs: Sub})
 
-    instance = envattrs.load(Main, 'TEST', {
-        'TEST_SUB_VALUE': 'foo'
-    })
-    assert instance.sub.value == 'foo'
+    instance = envattrs.load(Main, "TEST", {"TEST_SUB_VALUE": "foo"})
+    assert instance.sub.value == "foo"
