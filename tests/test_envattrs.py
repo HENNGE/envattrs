@@ -23,6 +23,15 @@ def test_load_fail():
         envattrs.load(Foo, "BAR", {"FOO_BAR": "baz"})
 
 
+def test_load_with_underscore():
+    @attr.s
+    class Foo:
+        _bar = attr.ib()
+
+    instance = envattrs.load(Foo, "FOO", {"FOO_BAR": "baz"})
+    assert instance._bar == "baz"
+
+
 def test_converters():
     @attr.s
     class Foo:
