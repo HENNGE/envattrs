@@ -23,26 +23,31 @@ def test_load_fail():
         envattrs.load(Foo, "BAR", {"FOO_BAR": "baz"})
 
 
-def test_load_with_leading_underscore():
+def test_load_with_underscores():
     @attr.s
     class Foo:
         _bar = attr.ib()
-
-    instance = envattrs.load(Foo, "FOO", {"FOO_BAR": "baz"})
-    assert instance._bar == "baz"
-
-
-def test_load_with_non_leading_underscore():
-    @attr.s
-    class Foo:
-        bar_check = attr.ib()
-        bar_check_again_ = attr.ib()
+        _bar_ = attr.ib()
+        _bar_check = attr.ib()
+        bar_foo = attr.ib()
+        bar_foo_ = attr.ib()
 
     instance = envattrs.load(
-        Foo, "FOO", {"FOO_BAR_CHECK": "baz", "FOO_BAR_CHECK_AGAIN_": "buzz"}
+        Foo,
+        "FOO",
+        {
+            "FOO_BAR": "baz",
+            "FOO_BAR_": "buzz",
+            "FOO_BAR_CHECK": "buzzyear",
+            "FOO_BAR_FOO": "boz",
+            "FOO_BAR_FOO_": "bose",
+        },
     )
-    assert instance.bar_check == "baz"
-    assert instance.bar_check_again_ == "buzz"
+    assert instance._bar == "baz"
+    assert instance._bar_ == "buzz"
+    assert instance._bar_check == "buzzyear"
+    assert instance.bar_foo == "boz"
+    assert instance.bar_foo_ == "bose"
 
 
 def test_converters():
