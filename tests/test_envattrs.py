@@ -36,9 +36,13 @@ def test_load_with_non_leading_underscore():
     @attr.s
     class Foo:
         bar_check = attr.ib()
+        bar_check_again_ = attr.ib()
 
-    instance = envattrs.load(Foo, "FOO", {"FOO_BAR_CHECK": "baz"})
+    instance = envattrs.load(
+        Foo, "FOO", {"FOO_BAR_CHECK": "baz", "FOO_BAR_CHECK_AGAIN_": "buzz"}
+    )
     assert instance.bar_check == "baz"
+    assert instance.bar_check_again_ == "buzz"
 
 
 def test_converters():
