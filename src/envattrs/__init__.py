@@ -27,7 +27,8 @@ def _iter(cls, prefix, source):
 
     for field in fields(cls):
         sub = field.metadata.get(SubAttrs, None)
-        key = f"{prefix.upper()}_{field.name.upper()}"
+        field_name = field.name.lstrip("_")
+        key = f"{prefix.upper()}_{field_name.upper()}"
         if sub is None:
             try:
                 value = source[key]
@@ -35,7 +36,7 @@ def _iter(cls, prefix, source):
                 continue
         else:
             value = load(sub, key, source)
-        yield field.name, value
+        yield field_name, value
 
 
 def load(cls: Type[T], prefix: str, source=os.environ) -> T:
