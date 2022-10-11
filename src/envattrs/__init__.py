@@ -27,7 +27,7 @@ def _iter(cls, prefix, source):
 
     for field in fields(cls):
         sub = field.metadata.get(SubAttrs, None)
-        field_name = field.name.strip("_")
+        field_name = field.name.lstrip("_")
         key = f"{prefix.upper()}_{field_name.upper()}"
         if sub is None:
             try:
