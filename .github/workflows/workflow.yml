@@ -1,0 +1,55 @@
+name: envattrs workflow
+
+on: push
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    name: Run pytest
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.6
+      - run: |
+          curl -sSL https://install.python-poetry.org | python - \
+        env:
+          POETRY_VERSION: 1.1.15
+        shell: bash
+      - run: poetry install
+        shell: bash
+      - name: Run pytest
+        run: |
+          poetry run pytest \
+          --cov=envattrs \
+          --cov-report=html:reports/coverage/ \
+          --junit-xml=reports/results.xml
+        shell: bash
+      - name: Store test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: reports/results.xml
+      - name: Store test coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage
+          path: reports/coverage/
+  
+  pre-commit:
+    name: Run pre-commit tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+            python-version: 3.6
+      - uses: pre-commit/actions@v3.0.0
