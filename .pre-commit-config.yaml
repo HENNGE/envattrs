@@ -9,7 +9,3 @@ repos:
     hooks:
       - id: isort
         args: ["--profile", "black"]
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.0
-    hooks:
-      - id: terraform_fmt
