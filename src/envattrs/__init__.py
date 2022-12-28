@@ -1,5 +1,5 @@
 import os
-from typing import TypeVar, Type
+from typing import Type, TypeVar
 
 try:
     import attr
