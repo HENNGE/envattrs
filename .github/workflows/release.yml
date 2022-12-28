@@ -1,0 +1,34 @@
+name: envattrs release workflow
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Release to PyPI
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.6
+      - run: |
+          curl -sSL https://install.python-poetry.org | python - \
+        env:
+          POETRY_VERSION: 1.1.15
+        shell: bash
+      - name: Release
+        run: poetry publish --build
+        env:
+          POETRY_HTTP_BASIC_PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        shell: bash
