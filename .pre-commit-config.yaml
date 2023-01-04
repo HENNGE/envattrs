@@ -1,15 +1,17 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 22.12.0
     hooks:
       - id: black
-        language_version: python3.6
+        language_version: python3.7
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.11.4
     hooks:
       - id: isort
         args: ["--profile", "black"]
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
     hooks:
-      - id: terraform_fmt
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
